@@ -1,0 +1,5 @@
+************************
+* Installation process *
+************************
+
+1°) Activation of the extension in your site.ini (make sure that the extension is above ezflow to override it).

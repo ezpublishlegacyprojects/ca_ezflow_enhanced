@@ -1,0 +1,33 @@
+************
+* FEATURES *
+************
+
+Blocks list filter
+==================
+
+* Filter list for content type
+
+Add the following settings in your block definition (block.ini)
+The lines below will allow the block TagCloud for content type global_layout and frontpage
+
+[TagCloud]
+...
+
+AvailableForClasses[]
+AvailableForClasses[]=global_layout
+AvailableForClasses[]=frontpage
+
+* Filter list for zone
+
+Add the following settings in your block definition (block.ini)
+The lines below will allow the block TagCloud for :
+- content type frontpage and zone main & right
+- content type global_layout and zone left
+
+[TagCloud]
+...
+
+AvailableForZones[]
+AvailableForZones[]=frontpage|main
+AvailableForZones[]=frontpage|right
+AvailableForZones[]=global_layout|left
