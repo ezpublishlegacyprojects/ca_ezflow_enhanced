@@ -23,8 +23,7 @@
 
 <div class="block-controls float-break">
     <div class="left blockname">
-	    <label>{'Name'|i18n( 'design/standard/block/edit' )}:</label>
-	    <input class="textfield block-control" type="text" name="ContentObjectAttribute_ezpage_block_name_array_{$attribute.id}[{$zone_id}][{$block_id}]" value="{$block.name}" size="35" />
+    <input class="textfield block-control" type="text" name="ContentObjectAttribute_ezpage_block_name_array_{$attribute.id}[{$zone_id}][{$block_id}]" value="{$block.name}" size="35" />
     </div>
     <div class="right">
     {if $is_custom|not}
@@ -63,33 +62,33 @@
         {foreach $custom_attributes as $custom_attrib}
             {def $use_browse_mode = ezini( $block.type, 'UseBrowseMode', 'block.ini' )}
             {if eq( $use_browse_mode[$custom_attrib], 'true' )}
-                <div class="block">
-	                <label>{$custom_attrib}:</label> 
-	                <input class="button block-control" name="CustomActionButton[{$attribute.id}_custom_attribute_browse-{$zone_id}-{$block_id}-{$custom_attrib}]" type="submit" value="{'Choose source'|i18n( 'design/standard/block/edit' )}" />
-                </div>
+               <label>{$custom_attrib}:</label>
+               <input class="left button block-control" name="CustomActionButton[{$attribute.id}_custom_attribute_browse-{$zone_id}-{$block_id}-{$custom_attrib}]" type="submit" value="{'Choose source'|i18n( 'design/standard/block/edit' )}" /><br/>
             {else}
-                <div class="block">
-	                <label>{$custom_attrib}:</label> 
-	                {if is_set( $custom_attribute_types[$custom_attrib] )}
-	                    {switch match = $custom_attribute_types[$custom_attrib]}
-	                        {case match = 'text'}
-	                        <textarea class="textbox block-control" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]" rows="7">{$block.custom_attributes[$custom_attrib]|wash()}</textarea>
-	                        {/case}
-	                        {case match = 'checkbox'}
-	                        <input class="block-control" type="hidden" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]" value="0" />
-	                        <input class="block-control" type="checkbox" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]"{if eq( $block.custom_attributes[$custom_attrib], '1')} checked="checked"{/if} value="1" />
-	                        {/case}
-	                        {case match = 'string'}
-	                        <input class="textfield block-control" type="text" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]" value="{$block.custom_attributes[$custom_attrib]}" />
-	                        {/case}
-	                        {case}
-	                        <input class="textfield block-control" type="text" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]" value="{$block.custom_attributes[$custom_attrib]}" />
-	                        {/case}
-	                    {/switch}
-	                {else}
-	                <input class="textfield block-control" type="text" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]" value="{$block.custom_attributes[$custom_attrib]}" />
-	                {/if}
-                </div>
+                <label>{$custom_attrib}:</label>
+                {if is_set( $custom_attribute_types[$custom_attrib] )}
+                    {switch match = $custom_attribute_types[$custom_attrib]}
+                        {case match = 'text'}
+                        <textarea class="left textbox block-control" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]" rows="7">{$block.custom_attributes[$custom_attrib]|wash()}</textarea>
+                        {/case}
+                        {case match = 'checkbox'}
+                        <input class="block-control" type="hidden" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]" value="0" />
+                        <input class="left block-control" type="checkbox" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]"{if eq( $block.custom_attributes[$custom_attrib], '1')} checked="checked"{/if} value="1" />
+                        {/case}
+                        {case match = 'string'}
+                        <input class="left textfield block-control" type="text" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]" value="{$block.custom_attributes[$custom_attrib]}" />
+                        {/case}
+                        {case match = 'list'}
+                            {def $custom_attributes_template = ezini( $block.type, 'CustomAttributeTemplateList', 'block.ini' )}
+                            {include uri=concat( 'design:', $custom_attributes_template[$custom_attrib] )}
+                        {/case}
+                        {case}
+                        <input class="left textfield block-control" type="text" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]" value="{$block.custom_attributes[$custom_attrib]}" />
+                        {/case}
+                    {/switch}
+                {else}
+                <input class="textfield block-control" type="text" name="ContentObjectAttribute_ezpage_block_custom_attribute_{$attribute.id}[{$zone_id}][{$block_id}][{$custom_attrib}]" value="{$block.custom_attributes[$custom_attrib]}" />
+                {/if}
             {/if}
             {undef $use_browse_mode}
         {/foreach}
@@ -112,7 +111,7 @@
         {def $use_browse_mode = ezini( $block.type, 'UseBrowseMode', 'block.ini' )}
         {foreach $block.custom_attributes as $custom_attrib => $value}
             {if eq( $use_browse_mode[$custom_attrib], 'true' )}
-                {fetch( 'content', 'node', hash( 'node_id', $value ) ).name}
+                {$custom_attrib} : {fetch( 'content', 'node', hash( 'node_id', $value ) ).name}<br/>
             {/if}
         {/foreach}
     {/if}
@@ -145,19 +144,19 @@
                                   $minutes = $time_left|mod( '86400' )|mod( '3600' )|div( '60' )|floor()
                                   $seconds = $time_left|mod( '86400' )|mod( '3600' )|mod( '60' )|round()
                              }
-                             
+
                              {if $days|gt( '0' )}
                                  {$days} {'d'|i18n( 'design/standard/block/edit' )}
                              {/if}
-                                 
+
                              {if $hours|gt( '0' )}
                                  {$hours} {'h'|i18n( 'design/standard/block/edit' )}
                              {/if}
-                                 
+
                              {if $minutes|gt( '0' )}
                                  {$minutes} {'m'|i18n( 'design/standard/block/edit' )}
                              {/if}
-                                 
+
                              {if $seconds|gt( '0' )}
                                  {$seconds} {'s'|i18n( 'design/standard/block/edit' )} {'left'|i18n( 'design/standard/block/edit' )}
                              {/if}
@@ -173,19 +172,19 @@
                                  $hours = $time_diff|mod( '86400' )|div( '3600' )|floor()
                                  $minutes = $time_diff|mod( '86400' )|mod( '3600' )|div( '60' )|floor()
                                  $seconds = $time_diff|mod( '86400' )|mod( '3600' )|mod( '60' )|round()}
-                                 
+
                              {if $days|gt( '0' )}
                                  {$days} {'d'|i18n( 'design/standard/block/edit' )}
                              {/if}
-                                 
+
                              {if $hours|gt( '0' )}
                                  {$hours} {'h'|i18n( 'design/standard/block/edit' )}
                              {/if}
-                                 
+
                              {if $minutes|gt( '0' )}
                                  {$minutes} {'m'|i18n( 'design/standard/block/edit' )}
                              {/if}
-                                 
+
                              {if $seconds|gt( '0' )}
                                  {$seconds} {'s'|i18n( 'design/standard/block/edit' )} {'left'|i18n( 'design/standard/block/edit' )}
                              {/if}

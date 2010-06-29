@@ -31,3 +31,16 @@ AvailableForZones[]
 AvailableForZones[]=frontpage|main
 AvailableForZones[]=frontpage|right
 AvailableForZones[]=global_layout|left
+
+New custom attributes
+=====================
+
+List is now available : you can have your own template to defined
+your object list display in a select box.
+
+[Poll]
+....
+
+CustomAttributes[]=poll
+CustomAttributeTypes[poll]=list
+CustomAttributeTemplateList[poll]=block/edit/poll_customattributeslist.tpl
