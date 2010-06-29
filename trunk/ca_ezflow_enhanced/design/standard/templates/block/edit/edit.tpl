@@ -64,6 +64,14 @@
             {if eq( $use_browse_mode[$custom_attrib], 'true' )}
                <label>{$custom_attrib}:</label>
                <input class="left button block-control" name="CustomActionButton[{$attribute.id}_custom_attribute_browse-{$zone_id}-{$block_id}-{$custom_attrib}]" type="submit" value="{'Choose source'|i18n( 'design/standard/block/edit' )}" /><br/>
+               
+               {def $browseStartNode = ezini( $block.type, 'BrowseStartNode', 'block.ini' )}
+               {if $browseStartNode[$custom_attrib]|eq('media')}
+                   <input type="hidden" name="browseModeStartNodeId[{$block_id}-{$custom_attrib}]" value="{ezini( 'NodeSettings', 'MediaRootNode', 'content.ini' )}" />
+               {elseif is_set($browseStartNode[$custom_attrib])}
+                   <input type="hidden" name="browseModeStartNodeId[{$block_id}-{$custom_attrib}]" value="{$browseStartNode[$custom_attrib]}" />
+               {/if}
+
             {else}
                 <label>{$custom_attrib}:</label>
                 {if is_set( $custom_attribute_types[$custom_attrib] )}
